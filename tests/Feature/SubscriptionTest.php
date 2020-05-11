@@ -2,13 +2,23 @@
 
 namespace Tests\Feature;
 
+use App\Events\UserAddedToNewsletterList;
+use App\Events\UserRemovedFromNewsletterList;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class SubscriptionTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Event::fake();
+    }
 
     /**
      * @test
@@ -49,6 +59,8 @@ class SubscriptionTest extends TestCase
             'id' => $unsubscribedUser->id,
             'newsletter_subscription' => true,
         ]);
+
+        Event::assertDispatched(UserAddedToNewsletterList::class);
     }
 
     /**
@@ -72,5 +84,7 @@ class SubscriptionTest extends TestCase
             'id' => $subscribedUser->id,
             'newsletter_subscription' => false,
         ]);
+
+        Event::assertDispatched(UserRemovedFromNewsletterList::class);
     }
 }

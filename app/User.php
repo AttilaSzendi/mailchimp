@@ -16,6 +16,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const SUBSCRIBED = 'subscribed';
+    const UNSUBSCRIBED = 'unsubscribed';
+    const ALREADY_SUBSCRIBED = 'already-subscribed';
+    const ALREADY_UNSUBSCRIBED = 'already-unsubscribed';
+
     protected $fillable = ['name', 'email', 'password', 'newsletter_subscription'];
 
     protected $hidden = [

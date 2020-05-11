@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserAddedToNewsletterList;
+use App\Events\UserRemovedFromNewsletterList;
 use App\Http\Requests\SubscriptionRequest;
 use App\Http\Resources\UserResource;
 use App\User;
@@ -16,12 +18,20 @@ class SubscriptionController extends Controller
 
     public function store(SubscriptionRequest $request)
     {
-        return $this->saveNewsletterSubscriptionValue($request->get('userId'), true);
+        $user = $this->saveNewsletterSubscriptionValue($request->get('userId'), true);
+
+        event(new UserAddedToNewsletterList($user));
+
+        return $user;
     }
 
     public function destroy(SubscriptionRequest $request)
     {
-        return $this->saveNewsletterSubscriptionValue($request->get('userId'), false);
+        $user = $this->saveNewsletterSubscriptionValue($request->get('userId'), false);
+
+        event(new UserRemovedFromNewsletterList($user));
+
+        return $user;
     }
 
     /**
