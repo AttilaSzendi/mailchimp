@@ -2,11 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Events\UserAddedToNewsletterList;
-use App\Events\UserRemovedFromNewsletterList;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class RemoteSubscriptionTest extends TestCase

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\UserAddedToNewsletterList;
 use App\MailchimpLog;
 use App\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,11 +12,10 @@ class AddSubscriberToMailchimpList implements ShouldQueue
 {
     /**
      * Handle the event.
-     *
-     * @param  object  $event
+     * @param UserAddedToNewsletterList $event
      * @return void
      */
-    public function handle($event)
+    public function handle(UserAddedToNewsletterList $event)
     {
         $response = NewsletterFacade::subscribe($event->user->email);
 
@@ -24,5 +24,15 @@ class AddSubscriberToMailchimpList implements ShouldQueue
             'email' => $event->user->email,
             'status' => $response ? User::SUBSCRIBED : User::ALREADY_SUBSCRIBED
         ]);
+    }
+
+    /**
+     * Handle a job failure.
+     * @param UserAddedToNewsletterList $event
+     * @return void
+     */
+    public function failed(UserAddedToNewsletterList $event)
+    {
+        event(new UserAddedToNewsletterList($event->user));
     }
 }
