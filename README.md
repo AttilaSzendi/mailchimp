@@ -15,4 +15,6 @@ Tölts ki a mailchimp api-ra vonatkozó adatokat a **.env** file-ban
 ```bash
 npm install
 ```
+Valamilyen környezetben futtasd. Én Homestead-ben fejlesztettem, de ez lehet Laravel Valet (only mac), php artisan serve, esetleg docker.
+
 Ezután közepes lángon, folyamatos keverés mellett készrefőzzük. :)
