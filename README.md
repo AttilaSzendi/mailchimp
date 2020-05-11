@@ -11,7 +11,10 @@ composer install
 ```bash
 php artisan key:generate
 ```
-Tölts ki a mailchimp api-ra vonatkozó adatokat a **.env** file-ban
+Tölts ki a mailchimp api-ra és az adatbázisra vonatkozó adatokat a **.env** file-ban
+```bash
+php artisan migrate --seed
+```
 ```bash
 npm install
 ```
